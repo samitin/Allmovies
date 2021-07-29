@@ -17,6 +17,7 @@
             android:layout_margin="5dp"
             tools:src="@drawable/image_space_jam_a_new_legacy"/>
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Space Jam: A New Legacy"/>
