@@ -7,10 +7,10 @@ import ru.samitin.allmovies.R
 import ru.samitin.allmovies.model.data.Movie
 
 @SuppressLint("ResourceType")
-class RepositoryImpl(val resources:Resources= Resources.getSystem()) :Repository{
+ class RepositoryImpl(private val categoryName:String="Category",private val resources:Resources) :Repository{
 
-    private val movies:List<Movie>
-    init {
+    private lateinit var movies:List<Movie>
+   init {
         val names=resources.getStringArray(R.array.titles);
         val ratings=resources.getIntArray(R.array.ratings)
         val dates=resources.getStringArray(R.array.dates)
@@ -20,11 +20,10 @@ class RepositoryImpl(val resources:Resources= Resources.getSystem()) :Repository
                 Movie(name = names[2],images.getResourceId(2,0),reting = ratings[2],date=dates[2]),
                 Movie(name = names[3],images.getResourceId(3,0),reting = ratings[3],date=dates[3]),
                 Movie(name = names[4],images.getResourceId(4,0),reting = ratings[4],date=dates[4]))
-
-
-
     }
+
     override fun getMoviesFromLocalStorage(): List<Movie> = movies
+    override fun getCategoryName(): String =categoryName
     override fun getMoviesFromServer(): List<Movie> = movies
 
 }

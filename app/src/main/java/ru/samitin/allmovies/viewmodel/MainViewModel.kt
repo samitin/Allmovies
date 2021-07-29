@@ -8,7 +8,7 @@ import ru.samitin.allmovies.model.repository.Repository
 import ru.samitin.allmovies.model.repository.RepositoryImpl
 
 class MainViewModel(private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
-                    private val repositoryImpl: Repository = RepositoryImpl()) : ViewModel() {
+                    private val repositoryImpl: Repository = RepositoryImpl("Category", Resources.getSystem())) : ViewModel() {
 
         fun getLifeData()=liveDataToObserve;
     fun getWeatherFromLocalSource() {
