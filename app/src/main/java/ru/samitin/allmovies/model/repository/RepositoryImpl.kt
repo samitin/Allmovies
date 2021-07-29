@@ -4,7 +4,7 @@ import android.content.res.Resources
 import ru.samitin.allmovies.R
 import ru.samitin.allmovies.model.data.Movie
 
-class RepositoryImpl(val resources:Resources) :Repository{
+class RepositoryImpl(val resources:Resources= Resources.getSystem()) :Repository{
 
     private val movies:List<Movie>
     init {
