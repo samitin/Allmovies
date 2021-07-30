@@ -33,15 +33,16 @@
     android:layout_gravity="bottom"
     android:orientation="horizontal"
     android:gravity="bottom">
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_home"
         android:text="@string/btn_text_home"
         android:textColor="@color/black"
         android:drawableTop="@drawable/ic_baseline_home_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        tools:backgroundTint="@color/buttons_bugrount_color"
         android:layout_weight="1"/>
-    <Button
+        <com.google.android.material.button.MaterialButton
         android:id="@+id/button_favorite"
         android:text="@string/btn_text_favorites"
         android:drawableTop="@drawable/ic_baseline_favorite_border_24"
@@ -49,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
-    <Button
+        <com.google.android.material.button.MaterialButton
         android:id="@+id/button_ratings"
         android:text="@string/btn_text_ratings"
         android:drawableTop="@drawable/ic_baseline_leaderboard_24"
