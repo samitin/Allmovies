@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="buttons_bugrount_color">#C9D2FF</color>
+    <color name="loadingBackground">#B4B9BA</color>
 </resources>
