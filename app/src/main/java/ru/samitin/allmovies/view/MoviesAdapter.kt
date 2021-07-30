@@ -1,5 +1,7 @@
 package ru.samitin.allmovies.view
 
+import android.content.res.Resources
+import android.content.res.TypedArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,10 +9,13 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import ru.samitin.allmovies.R
+import ru.samitin.allmovies.model.data.Category
 import ru.samitin.allmovies.model.data.Movie
 import ru.samitin.allmovies.model.repository.Repository
 
-class MoviesAdapter(private val repository:Repository):RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
+class MoviesAdapter(private val movies:List<Movie>,resources: Resources):RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
+
+    private val pictures:TypedArray  = resources.obtainTypedArray(R.array.images);
 
     class MoviesViewHolder(item:View):RecyclerView.ViewHolder(item){
         private val images:AppCompatImageView
@@ -23,8 +28,9 @@ class MoviesAdapter(private val repository:Repository):RecyclerView.Adapter<Movi
             date=item.findViewById(R.id.date)
             rating=item.findViewById(R.id.rating)
         }
-        fun bind(movie: Movie){
-            images.setImageResource(movie.image)
+        fun bind(movie: Movie,imageId:Int){
+
+            images.setImageResource(imageId)
             name.setText(movie.name)
             date.setText(movie.date)
             rating.setText(""+movie.reting)
@@ -37,9 +43,9 @@ class MoviesAdapter(private val repository:Repository):RecyclerView.Adapter<Movi
     }
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        holder.bind(repository.getMoviesFromLocalStorage()[position])
+        holder.bind(movies[position],pictures.getResourceId(position,0))
     }
 
-    override fun getItemCount() = repository.getMoviesFromLocalStorage().size
+    override fun getItemCount() = movies.size
 
 }

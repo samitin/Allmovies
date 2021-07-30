@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.samitin.allmovies.R
 import ru.samitin.allmovies.databinding.FragmentHomeBinding
+import ru.samitin.allmovies.model.data.Category
 import ru.samitin.allmovies.model.repository.Repository
 import ru.samitin.allmovies.model.repository.RepositoryImpl
-import ru.samitin.allmovies.viewmodel.MainViewModel
+
 
 class HomeFragment : Fragment() {
 
@@ -26,7 +27,7 @@ class HomeFragment : Fragment() {
     private var _bainding:FragmentHomeBinding?=null
     private val binding
         get()=_bainding!!
-
+    private lateinit var repository:Repository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -34,29 +35,28 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         _bainding= FragmentHomeBinding.inflate(inflater,container,false)
-        initListViewView()
+        repository=RepositoryImpl()
+        initRepository(repository)
+
         return binding.root
     }
-    private fun initListViewView(){
-        binding.parentLayout.addView(createCategory(RepositoryImpl("Комедии",resources)))
-        binding.parentLayout.addView(createCategory(RepositoryImpl("Боевики",resources)))
-        binding.parentLayout.addView(createCategory(RepositoryImpl("Ужасы",resources)))
-        binding.parentLayout.addView(createCategory(RepositoryImpl("Драмма",resources)))
-        binding.parentLayout.addView(createCategory(RepositoryImpl("Мультфильмы",resources)))
+    private fun initRepository(repository: Repository){
+        for (categegory in repository.getMoviesFromLocalStorage())
+            binding.parentLayout.addView(createCategory(categegory))
     }
-    private fun createCategory(repository: Repository):LinearLayout{
+    private fun createCategory(category: Category):LinearLayout{
         val recyclerView= context?.let { RecyclerView(it) }
 
         if (recyclerView != null) {
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-            recyclerView.adapter=MoviesAdapter(repository)
+            recyclerView.adapter=MoviesAdapter(category.movies,resources)
         }
         val layout=LinearLayout(context)
         layout.orientation=LinearLayout.VERTICAL
         val tv=TextView(context)
         tv.textSize= 30F
-        tv.setText(repository.getCategoryName())
+        tv.setText(category.categoryName)
         layout.addView(tv)
         layout.addView(recyclerView)
         return layout

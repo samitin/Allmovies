@@ -18,16 +18,14 @@ import ru.samitin.allmovies.model.data.Movie
                Movie("Судная ночь навсегда",2,78,"30 июн 2021"),
                Movie("Босс-молокосос 2",3,79,"01 июл 2021"),
                Movie("Война будущего",4,82,"30 июн 2021"))
-        categories= listOf(Category("", listOf()),
-                Category("", listOf()),
-                Category("", listOf()),
-                Category("", listOf()),
-                Category("", listOf()))
+        categories= listOf(Category("Боевики", movies),
+                Category("Комедии", movies),
+                Category("Фатеасеика", movies),
+                Category("Ужасы", movies),
+                Category("Мультфильмы", movies))
 
     }
-
     override fun getMoviesFromLocalStorage(): List<Category> = categories
-
     override fun getMoviesFromServer(): List<Category> = categories
 
 }
