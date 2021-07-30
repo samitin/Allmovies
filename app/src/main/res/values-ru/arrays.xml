@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="titles">
-        <item>Космический джем: Новое поколение</item>
-        <item>Чёрная вдова</item>
-        <item>Судная ночь навсегда</item>
-        <item>Босс-молокосос 2</item>
-        <item>Война будущего</item>
-    </string-array>
+
     <integer-array name="ratings">
         <item>78</item>
         <item>79</item>
