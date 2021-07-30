@@ -20,7 +20,7 @@ import ru.samitin.allmovies.model.data.Movie
                Movie("Война будущего",4,82,"30 июн 2021"))
         categories= listOf(Category("Боевики", movies),
                 Category("Комедии", movies),
-                Category("Фатеасеика", movies),
+                Category("Фантастика", movies),
                 Category("Ужасы", movies),
                 Category("Мультфильмы", movies))
 
