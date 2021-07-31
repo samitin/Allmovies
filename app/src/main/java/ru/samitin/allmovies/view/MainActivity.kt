@@ -15,16 +15,16 @@ import ru.samitin.allmovies.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var listFragment:List<Fragment>
+
     private lateinit var binder:MainActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binder= MainActivityBinding.inflate(layoutInflater)
         setContentView(binder.root)
 
-        listFragment= listOf(HomeFragment(), FavoritesFragment(), RatingsFragment())
+
         if (savedInstanceState == null) {
-            showFragment(listFragment[0])
+            showFragment(HomeFragment())
             setColorBackgrountButton(binder.buttonHome)
         }
         initView()
@@ -36,13 +36,13 @@ class MainActivity : AppCompatActivity() {
     }
     private fun clickNavigateButtons(){
         binder.buttonHome.setOnClickListener {
-            showFragment(listFragment[0])
+            showFragment(HomeFragment())
             setColorBackgrountButton(binder.buttonHome)}
         binder.buttonFavorite.setOnClickListener {
-            showFragment(listFragment[1])
+            showFragment(FavoritesFragment())
             setColorBackgrountButton(binder.buttonFavorite)}
         binder.buttonRatings.setOnClickListener {
-            showFragment(listFragment[2])
+            showFragment(RatingsFragment())
             setColorBackgrountButton(binder.buttonRatings)}
 
 
