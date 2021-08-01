@@ -1,5 +1,6 @@
 package ru.samitin.allmovies.view
 
+import android.content.Context
 import android.content.res.Resources
 import android.content.res.TypedArray
 import android.view.LayoutInflater
@@ -9,15 +10,17 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import ru.samitin.allmovies.R
-import ru.samitin.allmovies.model.data.Category
 import ru.samitin.allmovies.model.data.Movie
-import ru.samitin.allmovies.model.repository.Repository
 
-class MoviesAdapter(private val movies:List<Movie>,resources: Resources):RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
+class MoviesAdapter(private var onClickMovie:HomeFragment.OnClickMovie?):RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
-    private val pictures:TypedArray  = resources.obtainTypedArray(R.array.images);
-
-    class MoviesViewHolder(item:View):RecyclerView.ViewHolder(item){
+    private lateinit var pictures:TypedArray // = resources.obtainTypedArray(R.array.images);
+    private var movies: List<Movie> = listOf()
+    fun setMoviesData(data: List<Movie>) {
+        movies = data
+        notifyDataSetChanged()
+    }
+    inner class MoviesViewHolder(item:View):RecyclerView.ViewHolder(item){
         private val images:AppCompatImageView
         private val name:TextView
         private val date:TextView
@@ -28,22 +31,27 @@ class MoviesAdapter(private val movies:List<Movie>,resources: Resources):Recycle
             date=item.findViewById(R.id.date)
             rating=item.findViewById(R.id.rating)
         }
-        fun bind(movie: Movie,imageId:Int){
+        fun bind(movie: Movie){
 
-            images.setImageResource(imageId)
+            images.setImageResource(movie.image)
             name.setText(movie.name)
             date.setText(movie.date)
             rating.setText(""+movie.reting)
+            images.setOnClickListener {
+                onClickMovie?.onClick(movie)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val view=LayoutInflater.from(parent.context).inflate(R.layout.item_movie,parent,false)
+        pictures=parent.context.resources.obtainTypedArray(R.array.images)
         return MoviesViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        holder.bind(movies[position],pictures.getResourceId(position,0))
+        movies[position].image=pictures.getResourceId(position,0)
+        holder.bind(movies[position])
     }
 
     override fun getItemCount() = movies.size

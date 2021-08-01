@@ -7,9 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +17,7 @@ import ru.samitin.allmovies.R
 import ru.samitin.allmovies.databinding.FragmentHomeBinding
 import ru.samitin.allmovies.model.AppState
 import ru.samitin.allmovies.model.data.Category
+import ru.samitin.allmovies.model.data.Movie
 import ru.samitin.allmovies.model.repository.Repository
 import ru.samitin.allmovies.model.repository.RepositoryImpl
 import ru.samitin.allmovies.viewmodel.MainViewModel
@@ -25,9 +25,27 @@ import ru.samitin.allmovies.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
+    interface OnClickMovie{
+        fun onClick(movie:Movie)
     }
+    private val adapter=MoviesAdapter(  object : OnClickMovie {
+        override fun onClick(movie: Movie) {
+
+            val manager = activity?.supportFragmentManager
+            if (manager != null) {
+                val bundle = Bundle()
+                bundle.putParcelable(DescriptionMovieFragment.BUNDLE_EXTRA, movie)
+                manager.beginTransaction()
+                        .add(R.id.container, DescriptionMovieFragment.newInstance(bundle))
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+            }
+        }
+    })
+
+
+
+
     private var _bainding:FragmentHomeBinding?=null
     private val binding
         get()=_bainding!!
@@ -80,11 +98,11 @@ class HomeFragment : Fragment() {
     }
     private fun createCategory(category: Category):LinearLayout{
         val recyclerView= context?.let { RecyclerView(it) }
-
+        adapter.setMoviesData(category.movies)
         if (recyclerView != null) {
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-            recyclerView.adapter=MoviesAdapter(category.movies,resources)
+            recyclerView.adapter=adapter
         }
         val layout=LinearLayout(context)
         layout.orientation=LinearLayout.VERTICAL

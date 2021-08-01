@@ -1,0 +1,89 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/bacgrount_tint_color">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+    <TextView
+        android:id="@+id/des_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Космический джем: Новое поколение"
+        android:textSize="30sp"
+        android:textColor="@color/teal_700"
+        android:layout_marginBottom="10dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/des_image"
+            android:layout_width="200dp"
+            android:layout_height="300dp"
+            tools:src="@drawable/image_space_jam_a_new_legacy"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_date"
+                android:textColor="@color/teal_700"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/des_date"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="08 июль 2021"
+                android:textSize="20dp"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_rating"
+                android:textColor="@color/teal_700"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/des_rating"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="78"
+                android:textSize="20dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <TextView
+
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textColor="@color/teal_700"
+        android:text="@string/text_description"/>
+    <TextView
+        android:id="@+id/des_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Чтобы спасти сына, знаменитый чемпион НБА отправляется в сказочный мир,
+                    где в команде мультяшек вынужден сражаться на баскетбольной площадке с
+                    цифровыми копиями знаменитых игроков."/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
