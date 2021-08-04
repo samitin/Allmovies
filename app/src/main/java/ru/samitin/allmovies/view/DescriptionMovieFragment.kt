@@ -24,8 +24,10 @@ class DescriptionMovieFragment :Fragment(){
         }
     }
     private var _bainding: FragmentDescriptionMovieBinding?=null
+
     private val binding
         get()=_bainding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
