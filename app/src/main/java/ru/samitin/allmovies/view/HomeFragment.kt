@@ -60,19 +60,17 @@ class HomeFragment : Fragment() {
     private fun renderData(appState: AppState) {
         when(appState){
             is AppState.Success ->{
-                binding.loadingLayout.visibility=View.GONE
+                binding.loadingLayout.hide()
                 initListCategory(appState.listCategory)
             }
             is AppState.Loading ->{
-                binding.loadingLayout.visibility=View.VISIBLE
+                binding.loadingLayout.show()
             }
             is AppState.Error  ->{
-                binding.loadingLayout.visibility=View.GONE
-                Snackbar
-                        .make(binding.parentLayout, "Error", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Reload") { viewModel.getWeatherFromLocalSource() }
-                        .show()
-
+                binding.loadingLayout.hide()
+                binding.parentLayout.showSnackBar(R.string.snackBarError,R.string.snackBarReload){
+                    viewModel.getWeatherFromLocalSource()
+                }
             }
         }
     }
