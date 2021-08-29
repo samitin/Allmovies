@@ -20,6 +20,12 @@ android {
     buildFeatures {
         viewBinding true
     }
+    buildTypes.each{
+        Properties properties=new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+        def apiKey=properties.getProperty("movies_api_key","")
+        it.buildConfigField "String","MOVIES_API_KEY",apiKey
+    }
 
     buildTypes {
         release {
