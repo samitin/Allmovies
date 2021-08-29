@@ -15,21 +15,18 @@ import ru.samitin.allmovies.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
 
-
     private lateinit var binder:MainActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binder= MainActivityBinding.inflate(layoutInflater)
         setContentView(binder.root)
-
-
-        if (savedInstanceState == null) {
+        if (savedInstanceState==null){
             showFragment(HomeFragment())
             setColorBackgrountButton(binder.buttonHome)
         }
         initView()
-
     }
+
     private fun initView(){
         setSupportActionBar(binder.toolbar)
         clickNavigateButtons()
@@ -44,8 +41,6 @@ class MainActivity : AppCompatActivity() {
         binder.buttonRatings.setOnClickListener {
             showFragment(RatingsFragment())
             setColorBackgrountButton(binder.buttonRatings)}
-
-
     }
 
         fun setColorBackgrountButton(button:MaterialButton){
@@ -54,11 +49,6 @@ class MainActivity : AppCompatActivity() {
                     binder.buttonRatings.backgroundTintList = ContextCompat.getColorStateList(this, R.color.white)
                     button.backgroundTintList = ContextCompat.getColorStateList(this, R.color.buttons_bugrount_color)
         }
-
-
-
-
-
 
     private fun showFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()
@@ -83,7 +73,5 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
-
-
 }
 

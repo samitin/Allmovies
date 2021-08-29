@@ -17,6 +17,7 @@ class MainViewModel(private val liveDataToObserve: MutableLiveData<AppState> = M
             Thread.sleep(1000)
             liveDataToObserve.postValue(AppState.Success(repositoryImpl.getMoviesFromLocalStorage()))
         }.start()
+
     }
 
     fun getWeatherFromRemoteSource() {
