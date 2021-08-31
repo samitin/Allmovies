@@ -6,4 +6,4 @@ import android.os.Parcelable
 import ru.samitin.allmovies.R
 import kotlinx.android.parcel.Parcelize
 @Parcelize
-data class Category (val categoryName:String,val movies:List<Movie>):Parcelable
+data class Category (val categoryName:String,val items:List<Movie>):Parcelable
