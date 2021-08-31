@@ -22,7 +22,7 @@ import com.google.gson.reflect.TypeToken as TypeToken
 
 class MoviesLoader {
     private val YOUR_API_KEY = "0b8cdfc64ddf0f42c3b7bbfa666780aa"
-    var genres:Map<Int,String>?=null
+
 
     @RequiresApi(Build.VERSION_CODES.N)
     constructor(){
@@ -31,20 +31,28 @@ class MoviesLoader {
 
 
     @RequiresApi(Build.VERSION_CODES.N)
-    public fun loadGenre() {
-        genres= mutableMapOf()
+    public fun loadGenre() :Map<Int,String>{
+        var genres:MutableMap<Int,String> = mutableMapOf()
+
         try {
             val uri =
                     URL("https://api.themoviedb.org/3/genre/movie/list?api_key=${YOUR_API_KEY}&language=ru")
-            val handler = Handler(Looper.myLooper()!!)
-            Thread(Runnable {
+            Thread (Runnable {
                 lateinit var urlConnection: HttpsURLConnection
                 try {
                     urlConnection = uri.openConnection() as HttpsURLConnection
                     urlConnection.requestMethod = "GET"
                     urlConnection.readTimeout = 10000
-                    val bufferedReader = BufferedReader(InputStreamReader(urlConnection.inputStream))
-                    genres= Gson().fromJson<Map<Int,String>>(getLines(bufferedReader), MutableMap::class.java)
+                    val bufferedReader =
+                        BufferedReader(InputStreamReader(urlConnection.inputStream))
+
+                    val joinText = getLines(bufferedReader)
+                    val jsonObject = JSONObject(joinText)
+                    var jsonArray = jsonObject.getJSONArray("genres")
+                    for (i in 0..jsonArray.length() - 1) {
+                        var userData = jsonArray.getJSONObject(i)
+                        genres.put(userData.getInt("id"), userData.getString("name"))
+                    }
                 } catch (e: Exception) {
                     Log.e("", "Fail connection", e)
                     e.printStackTrace()
@@ -58,9 +66,10 @@ class MoviesLoader {
             e.printStackTrace()
             //Обработка ошибки
         }
+        return genres
     }
     @RequiresApi(Build.VERSION_CODES.N)
-    fun loadCategory(id:Int,name:String): Category {
+    public fun loadCategory(id:Int,name:String): Category {
 
         var list= mutableListOf<Movie>()
         try {
@@ -68,7 +77,7 @@ class MoviesLoader {
                 URL("\n" +
                         "https://api.themoviedb.org/3/list/"+id+"?api_key="+YOUR_API_KEY+"&language=ru")
             val handler = Handler(Looper.myLooper()!!)
-            Thread {
+            Thread (Runnable {
                 lateinit var urlConnection: HttpsURLConnection
                 val any = try {
                     urlConnection = uri.openConnection() as HttpsURLConnection
@@ -76,18 +85,22 @@ class MoviesLoader {
                     urlConnection.readTimeout = 10000
                     val bufferedReader =
                         BufferedReader(InputStreamReader(urlConnection.inputStream))
-                    val listType = object : TypeToken<List<Movie>>() {}.type
-                    val jsonObject=JSONObject(getLines(bufferedReader))
-                    var jsonArray=jsonObject.getJSONArray("items")
-                    for (i in 0..jsonArray.length()-1){
-                        var userData=jsonArray.getJSONObject(i)
-                        list.add(Movie(userData.getString("overview"),
-                                       userData.getString("release_date"),
-                                       userData.getString("title"),
-                                       userData.getDouble("vote_average"),
-                                       3))
+                    val joinText = getLines(bufferedReader)
+                    val jsonObject = JSONObject(joinText)
+                    var jsonArray = jsonObject.getJSONArray("items")
+                    for (i in 0..jsonArray.length() - 1) {
+                        var userData = jsonArray.getJSONObject(i)
+                        list.add(
+                            Movie(
+                                overview = userData.getString("overview"),
+                               release_date =  userData.getString("release_date"),
+                                title = userData.getString("title"),
+                                vote_average = userData.getDouble("vote_average"),
+                                image = 3
+                            )
+                        )
                     }
-                    handler.post {  }
+                    handler.post { }
                 } catch (e: Exception) {
                     Log.e("TAG", "Fail connection", e)
                     e.printStackTrace()
@@ -95,7 +108,7 @@ class MoviesLoader {
                 } finally {
                     urlConnection.disconnect()
                 }
-            }.start()
+            }).start()
         } catch (e: MalformedURLException) {
             Log.e("TAG", "Fail URI", e)
             e.printStackTrace()
@@ -104,6 +117,20 @@ class MoviesLoader {
         return  Category(name, list)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun getServerCategories():List<Category>{
+        var listCategories= mutableListOf<Category>()
+        Thread (Runnable {
+            val genre = loadGenre()
+            for (id in genre.keys) {
+                var category = genre.get(id)?.let { loadCategory(id, it) }
+                if (category != null) {
+                    listCategories.add(category)
+                }
+            }
+        }).start()
+        return listCategories
+    }
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getLines(reader: BufferedReader): String {
         return reader.lines().collect(Collectors.joining("\n"))
