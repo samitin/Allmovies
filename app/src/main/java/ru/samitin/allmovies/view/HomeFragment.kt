@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
     private fun createCategory(category: Category):LinearLayout{
 
         val recyclerView= context?.let { RecyclerView(it) }?.let {recyclerView->
-            adapter.setMoviesData(category.movies)
+            adapter.setMoviesData(category.items)
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
             recyclerView.adapter=adapter

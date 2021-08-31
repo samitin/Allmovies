@@ -1,8 +1,10 @@
 package ru.samitin.allmovies.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -11,15 +13,20 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.button.MaterialButton
 import ru.samitin.allmovies.R
 import ru.samitin.allmovies.databinding.MainActivityBinding
+import ru.samitin.allmovies.model.data.Category
+import ru.samitin.allmovies.model.dto.MoviesLoader
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binder:MainActivityBinding
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binder= MainActivityBinding.inflate(layoutInflater)
         setContentView(binder.root)
+        val category=MoviesLoader().loadCategory(28,"name")
+        category
         if (savedInstanceState==null){
             showFragment(HomeFragment())
             setColorBackgrountButton(binder.buttonHome)

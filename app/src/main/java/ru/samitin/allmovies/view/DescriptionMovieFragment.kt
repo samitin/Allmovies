@@ -41,11 +41,11 @@ class DescriptionMovieFragment :Fragment(){
         super.onViewCreated(view, savedInstanceState)
         val movie=arguments?.getParcelable<Movie>(BUNDLE_EXTRA)
         if (movie!=null){
-            binding.desImage.setImageResource(movie.image)
-            binding.desName.setText(movie.name)
-            binding.desDate.setText(movie.date)
-            binding.desRating.setText("" + movie.reting + "%")
-            binding.desDescription.setText(movie.descreotion)
+            movie.image?.let { binding.desImage.setImageResource(it) }
+            binding.desName.setText(movie.title)
+            binding.desDate.setText(movie.release_date)
+            binding.desRating.setText("" + movie.vote_average + "%")
+            binding.desDescription.setText(movie.overview)
         }
     }
 

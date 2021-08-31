@@ -32,10 +32,10 @@ class MoviesAdapter():RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
         fun bind(movie: Movie){
             with(binding){
-              image.setImageResource(movie.image)
-              name.setText(movie.name)
-              date.setText(movie.date)
-              rating.setText(""+movie.reting)
+              movie.image?.let { image.setImageResource(it) }
+              name.setText(movie.title)
+              date.setText(movie.release_date)
+              rating.setText(""+movie.vote_average)
               image.setOnClickListener {
                 onClickMovie(movie)
               }
