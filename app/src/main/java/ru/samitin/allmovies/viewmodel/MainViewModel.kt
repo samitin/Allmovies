@@ -13,7 +13,7 @@ class MainViewModel @RequiresApi(Build.VERSION_CODES.N) constructor(private val 
                                                                     private val repositoryImpl: Repository = RepositoryImpl()) : ViewModel() {
 
         fun getLifeData()=liveDataToObserve;
-    fun getWeatherFromLocalSource() {
+    fun getMoviesFromLocalSource() {
         liveDataToObserve.value = AppState.Loading
         Thread (
             Runnable {
@@ -24,7 +24,7 @@ class MainViewModel @RequiresApi(Build.VERSION_CODES.N) constructor(private val 
 
     }
 
-    fun getWeatherFromRemoteSource() {
+    fun getMoviesFromRemoteSource() {
         liveDataToObserve.value = AppState.Loading
         Thread {
             Thread.sleep(1000)

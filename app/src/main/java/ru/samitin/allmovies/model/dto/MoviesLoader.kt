@@ -88,7 +88,7 @@ class MoviesLoader {
                     val joinText = getLines(bufferedReader)
                     val jsonObject = JSONObject(joinText)
                     var jsonArray = jsonObject.getJSONArray("items")
-                    for (i in 0..jsonArray.length() - 1) {
+                    for (i in 0..10) {
                         var userData = jsonArray.getJSONObject(i)
                         list.add(
                             Movie(
@@ -120,7 +120,6 @@ class MoviesLoader {
     @RequiresApi(Build.VERSION_CODES.N)
     fun getServerCategories():List<Category>{
         var listCategories= mutableListOf<Category>()
-        Thread (Runnable {
             val genre = loadGenre()
             for (id in genre.keys) {
                 var category = genre.get(id)?.let { loadCategory(id, it) }
@@ -128,7 +127,6 @@ class MoviesLoader {
                     listCategories.add(category)
                 }
             }
-        }).start()
         return listCategories
     }
     @RequiresApi(Build.VERSION_CODES.N)
