@@ -17,6 +17,7 @@ import ru.samitin.allmovies.databinding.FragmentHomeBinding
 import ru.samitin.allmovies.model.AppState
 import ru.samitin.allmovies.model.data.Category
 import ru.samitin.allmovies.model.data.Movie
+import ru.samitin.allmovies.model.dto.MoviesLoader
 import ru.samitin.allmovies.model.repository.Repository
 import ru.samitin.allmovies.model.repository.RepositoryImpl
 import ru.samitin.allmovies.viewmodel.MainViewModel
@@ -29,6 +30,7 @@ class HomeFragment : Fragment() {
     private var _bainding:FragmentHomeBinding?=null
     private val binding
         get()=_bainding!!
+   // private val listCategery=MoviesLoader().getServerCategories()
 
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
@@ -55,12 +57,13 @@ class HomeFragment : Fragment() {
         }
         val observer= Observer<AppState> {renderData(it)  }
         viewModel.getLifeData().observe(viewLifecycleOwner,observer)
-        viewModel.getWeatherFromLocalSource()
+        viewModel.getMoviesFromLocalSource()
     }
     private fun renderData(appState: AppState) {
         when(appState){
             is AppState.Success ->{
                 binding.loadingLayout.hide()
+               // initListCategory(listCategery)
                 initListCategory(appState.listCategory)
             }
             is AppState.Loading ->{
@@ -69,7 +72,7 @@ class HomeFragment : Fragment() {
             is AppState.Error  ->{
                 binding.loadingLayout.hide()
                 binding.parentLayout.showSnackBar(R.string.snackBarError,R.string.snackBarReload){
-                    viewModel.getWeatherFromLocalSource()
+                    viewModel.getMoviesFromLocalSource()
                 }
             }
         }

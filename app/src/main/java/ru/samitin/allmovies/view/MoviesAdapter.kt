@@ -1,5 +1,6 @@
 package ru.samitin.allmovies.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.content.res.TypedArray
@@ -30,9 +31,10 @@ class MoviesAdapter():RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     inner class MoviesViewHolder(val binding: ItemMovieBinding):RecyclerView.ViewHolder(binding.root){
 
-        fun bind(movie: Movie){
+        @SuppressLint("ResourceType")
+        fun bind(movie: Movie,imgPos:Int){
             with(binding){
-              movie.image?.let { image.setImageResource(it) }
+              image.setImageResource(imgPos)
               name.setText(movie.title)
               date.setText(movie.release_date)
               rating.setText(""+movie.vote_average)
@@ -49,8 +51,9 @@ override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHol
 }
 
 override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-      movies[position].image=pictures.getResourceId(position,0)
-      holder.bind(movies[position])
+   // var pos:Int=pictures.getResourceId(movies[position].image!!,0)
+   // movies[position].image=pos
+      holder.bind(movies[position],pictures.getResourceId(movies[position].image!!,0))
 }
 
 override fun getItemCount() = movies.size

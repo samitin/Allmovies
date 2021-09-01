@@ -3,16 +3,23 @@ package ru.samitin.allmovies.model.repository
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.content.res.TypedArray
+import android.os.Build
+import androidx.annotation.RequiresApi
 import ru.samitin.allmovies.R
 import ru.samitin.allmovies.model.data.Category
 import ru.samitin.allmovies.model.data.Movie
+import ru.samitin.allmovies.model.dto.MoviesLoader
 
+@RequiresApi(Build.VERSION_CODES.N)
 @SuppressLint("ResourceType")
  class RepositoryImpl() :Repository{
 
     private lateinit var movies:List<Movie>
     private lateinit var categories:List<Category>
-   init {
+    private lateinit var listServerCategories:List<Category>
+
+    init {
+        listServerCategories= MoviesLoader().getServerCategories()
         movies= listOf<Movie>(Movie(title= "Космический джем: Новое поколение",release_date = "08 июль 2021",vote_average = 7.8,
                 overview ="Чтобы спасти сына, знаменитый чемпион НБА отправляется в сказочный мир," +
                         " где в команде мультяшек вынужден сражаться на баскетбольной площадке с " +
@@ -39,7 +46,9 @@ import ru.samitin.allmovies.model.data.Movie
                 Category("Мультфильмы", movies))
 
     }
-    override fun getMoviesFromLocalStorage(): List<Category> = categories
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun getMoviesFromLocalStorage(): List<Category> =
+            listServerCategories
     override fun getMoviesFromServer(): List<Category> = categories
 
 }

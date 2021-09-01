@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binder= MainActivityBinding.inflate(layoutInflater)
         setContentView(binder.root)
-        val category=MoviesLoader().loadCategory(28,"name")
-        category
         if (savedInstanceState==null){
             showFragment(HomeFragment())
             setColorBackgrountButton(binder.buttonHome)
