@@ -9,12 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.google.android.material.button.MaterialButton
 import ru.samitin.allmovies.R
 import ru.samitin.allmovies.databinding.MainActivityBinding
-import ru.samitin.allmovies.model.data.Category
-import ru.samitin.allmovies.model.dto.MoviesLoader
 
 
 class MainActivity : AppCompatActivity() {

@@ -1,6 +1,5 @@
 package ru.samitin.allmovies.viewmodel
 
-import android.content.res.Resources
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +17,8 @@ class MainViewModel @RequiresApi(Build.VERSION_CODES.N) constructor(private val 
         Thread (
             Runnable {
                 Thread.sleep(1000)
-                val categoryes = repositoryImpl.getMoviesFromLocalStorage()
+                val categoryes =
+                        repositoryImpl.getMoviesFromLocalStorage()
                 liveDataToObserve.postValue(AppState.Success(categoryes))
             }).start()
 
