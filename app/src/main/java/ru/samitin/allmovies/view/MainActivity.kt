@@ -1,5 +1,8 @@
 package ru.samitin.allmovies.view
 
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -12,11 +15,14 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import ru.samitin.allmovies.R
 import ru.samitin.allmovies.databinding.MainActivityBinding
+import ru.samitin.allmovies.service.MyBroadcastReceiver
 
 
 class MainActivity : AppCompatActivity() {
 
+
     private lateinit var binder:MainActivityBinding
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             setColorBackgrountButton(binder.buttonHome)
         }
         initView()
+
     }
 
     private fun initView(){

@@ -10,10 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.samitin.allmovies.R
@@ -30,6 +30,7 @@ import ru.samitin.allmovies.model.data.Category as Category
 class HomeFragment : Fragment() {
 
     private val adapter:MoviesAdapter = MoviesAdapter()
+
 
 
     private var _bainding:FragmentHomeBinding?=null
@@ -84,6 +85,15 @@ class HomeFragment : Fragment() {
      /*val observer= Observer<AppState> {renderData(it)  }
      viewMol.getLifeData().observe(viewLifecycleOwner,observer)
       viewModel.getMoviesFromLocalSource()*/
+        val connectionLiveData = context?.let { ConnectionLiveData(it) }
+        connectionLiveData?.observe(viewLifecycleOwner, Observer { isConnected ->
+            isConnected?.let {
+                if (it)
+                    Toast.makeText(context,"Есть связь!!!",Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(context,"Нет связи!!!",Toast.LENGTH_SHORT).show()
+            }
+        })
     }
     private fun renderData(appState: AppState) {
        when(appState){
